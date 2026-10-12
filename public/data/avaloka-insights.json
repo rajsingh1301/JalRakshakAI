@@ -1,0 +1,10 @@
+{
+  "status": "pending",
+  "provider": "Avaloka",
+  "method": "manual_web",
+  "dataset_sha256": "75df9c6e0dd86588388d2a7b1e78e932ad6b868d6f470a77c21c3d0b9af43227",
+  "dataset_id": null,
+  "project_url": null,
+  "insights": [],
+  "note": "Awaiting genuine Avaloka exports and human verification. No API integration is claimed."
+}
