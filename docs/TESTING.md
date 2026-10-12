@@ -72,6 +72,10 @@ Data preparation and processing executed successfully. Vite production builds pa
 
 `.github/workflows/ci.yml` reproduces the dataset, checks originals, runs calculation tests, builds and runs browser tests on pushes and pull requests. Its remote run status must be checked independently; creating the workflow is not itself evidence that GitHub CI passed.
 
+Verified remote runs: [initial workflow run](https://github.com/rajsingh1301/JalRakshakAI/actions/runs/38245497165) and [subsequent validation](https://github.com/rajsingh1301/JalRakshakAI/actions/runs/38245965437) both completed with **success**. Future commits generate their own runs and must be checked separately.
+
+Security verification inspected the tracked file list and compared local credential values in memory against all tracked files and production assets. **Passed:** no local credentials were present, and only `.env.example` was tracked. No credential values were printed.
+
 ## Known limits
 
 - Genuine Avaloka dataset upload/analysis cannot be verified until original web outputs are supplied.
