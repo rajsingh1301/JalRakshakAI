@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test tests/*.test.js",
+    "test:e2e": "playwright test",
     "data:process": ".venv/bin/python scripts/process_data.py"
   },
   "dependencies": {
