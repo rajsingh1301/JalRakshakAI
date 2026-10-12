@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import fs from 'node:fs';
 const oracle = JSON.parse(execFileSync('python3', ['tests/csv_audit_oracle.py'], { maxBuffer: 4 * 1024 * 1024 }));
 const fmt = (v, digits = 0) => v == null ? '—' : v.toLocaleString('en-IN', { maximumFractionDigits: digits });
 const rate = v => v == null ? '—' : `${fmt(v, 1)}%`;
@@ -138,4 +139,47 @@ test('Avaloka output remains explicitly pending without fabricated insight cards
   await ready(page, 'insights');
   await expect(page.locator('.pending-analysis')).toContainText('No AI findings have been completed or verified yet');
   await expect(page.locator('.insight-grid')).toHaveCount(0);
+});
+
+test('station toggles, priority search, band cards, pagination and export work', async ({ page, request }) => {
+  const data = await (await request.get('/data/dashboard.json')).json();
+  await ready(page);
+  for (const parameter of data.parameters) {
+    await page.getByRole('button', { name: `Explore ${parameter.name}`, exact: true }).click();
+    const stations = new Map();
+    for (const record of oracle.rows) {
+      const value = record.values[parameter.id];
+      if (value == null) continue;
+      const key = `${record.state}:${record.district}:${record.station}`;
+      stations.set(key, Math.max(stations.get(key) ?? -Infinity, value));
+    }
+    await expect(page.locator('.station-map svg > circle')).toHaveCount(stations.size);
+    await page.getByRole('button', { name: 'Elevated', exact: true }).click();
+    await expect(page.locator('.station-map svg > circle')).toHaveCount([...stations.values()].filter(v => v > parameter.acceptable).length);
+    await page.getByRole('button', { name: 'All', exact: true }).click();
+  }
+  await page.getByRole('navigation').getByRole('link', { name: 'District priorities', exact: true }).click();
+  for (const [index, band] of ['High', 'Moderate', 'Lower', 'Insufficient evidence'].entries()) {
+    await page.locator('.band-card').nth(index).click();
+    await expect(page.getByRole('combobox', { name: 'Evidence band' })).toHaveValue(band);
+    await expect(page.locator('.band-card').nth(index)).toHaveAttribute('aria-pressed', 'true');
+    await page.locator('.band-card').nth(index).click();
+    await expect(page.getByRole('combobox', { name: 'Evidence band' })).toHaveValue('all');
+  }
+  const first = await page.locator('.priority-table tbody tr').first().textContent();
+  await page.getByRole('button', { name: 'Next districts' }).click();
+  expect(await page.locator('.priority-table tbody tr').first().textContent()).not.toBe(first);
+  await page.getByRole('button', { name: 'Previous districts' }).click();
+  await expect(page.locator('.priority-table tbody tr').first()).toHaveText(first);
+  await page.getByRole('textbox', { name: 'Search districts' }).fill('no-district-matches');
+  await expect(page.getByRole('heading', { name: 'No districts match this view' })).toBeVisible();
+  await page.getByRole('textbox', { name: 'Search districts' }).fill('Jaisalmer');
+  await expect(page.locator('.priority-table tbody tr')).toHaveCount(1);
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export priorities' }).click();
+  const download = await pending;
+  const csv = fs.readFileSync(await download.path(), 'utf8');
+  expect(csv.split('\n').filter(Boolean)).toHaveLength(2);
+  expect(csv).toContain('"Jaisalmer"');
+  expect(csv).toContain('"Total hardness"');
 });
