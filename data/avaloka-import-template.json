@@ -1,0 +1,23 @@
+{
+  "status": "pending",
+  "provider": "Avaloka",
+  "method": "manual_web",
+  "dataset_sha256": "COPY_EXACT_HASH_FROM_data/processed/provenance.json",
+  "dataset_id": "",
+  "project_url": "",
+  "insights": [
+    {
+      "id": "",
+      "question": "",
+      "original_response": "",
+      "finding": "",
+      "explanation": "",
+      "supporting_values": [],
+      "coverage": "",
+      "limitations": [],
+      "evidence_file": "",
+      "reviewed_at": "",
+      "verified": false
+    }
+  ]
+}
