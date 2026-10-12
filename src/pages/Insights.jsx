@@ -1,0 +1,2 @@
+import { PageHeading, Empty } from '../components/UI.jsx';
+export default function Insights() { return <><PageHeading eyebrow="AVALOKA ANALYSIS" title="AI insights, grounded in evidence" description="Original Avaloka findings are kept separate from local calculations." /><Empty title="Analysis pending" description="The authentic CSV is ready for manual Avaloka upload. Verified outputs will appear here after review." /></>; }

@@ -1,0 +1,3 @@
+import { PageHeading, Metric } from '../components/UI.jsx';
+import { number } from '../utils/analysis.js';
+export default function Overview({ records, data }) { return <><PageHeading eyebrow="GROUNDWATER INTELLIGENCE" title="See the evidence. Protect the source." description="Uncovering Invisible Water Threats Through AI." /><div className="metrics-grid"><Metric label="Sampling events" value={number(records.length)} detail="Actual CGWB observations" /><Metric label="Districts" value={number(new Set(records.map(r => `${r.state}:${r.district}`)).size)} detail="Across the selected coverage" /><Metric label="Available parameters" value={data.parameters.length} detail="With documented thresholds" /></div></>; }
