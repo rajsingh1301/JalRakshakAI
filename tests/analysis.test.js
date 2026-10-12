@@ -32,7 +32,7 @@ test('missing values and threshold equality are never counted as exceedances', (
   assert.equal(stats.valid, 3);
   assert.equal(stats.exceedances, 1);
   assert.equal(stats.missing, 4);
-  assert.equal(stats.rate, 100 / 3);
+  assert.ok(Math.abs(stats.rate - 100 / 3) < 1e-10);
   assert.equal(statistics([], chloride).rate, null);
 });
 
