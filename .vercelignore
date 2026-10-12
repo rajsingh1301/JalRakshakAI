@@ -1,0 +1,12 @@
+.venv/
+data/raw/
+data/processed/
+data/avaloka-private/
+tests/
+test-results/
+playwright-report/
+docs/
+scripts/
+.env
+.env.*
+!.env.example
