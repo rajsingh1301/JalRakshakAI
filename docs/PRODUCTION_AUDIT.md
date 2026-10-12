@@ -12,7 +12,7 @@ The fix and independent CSV regression tests were pushed in commit `cc581e291e7f
 |---|---|---|---|
 | 1 | Every page loads | PASS | All five hash routes load, navigate and survive refresh. |
 | 2 | Navigation and filters | PASS | Navigation, all 18 state/year combinations, six parameters, district selection, observation search, elevation checkbox, reset, priority search, evidence dropdown/cards, both pagers, map toggles and CSV exports exercised. |
-| 3 | Charts reflect authentic CSV | PASS | Six-parameter distribution counts, actual distribution SVG bar proportions, annual denominators/rates and district chart tables match independent CSV calculations. Station counts and elevated maximum-per-station selection also match CSV measurements. |
+| 3 | Charts reflect authentic CSV | PASS | Six-parameter distribution counts, actual distribution and district SVG bar proportions, annual denominators/rates and district chart tables match independent CSV calculations. Station counts and elevated maximum-per-station selection also match CSV measurements. |
 | 4 | Dashboard totals | PASS after fix | 3,415 events, 55 districts, six measured tracked parameters in the full scope. Every state/year scope matches the CSV, including the corrected parameter count. |
 | 5 | Missing fluoride / nitrate | PASS | Both columns are blank in all 3,415 events; neither appears as zero contamination or as a measured selector option. Unmeasured arsenic in Rajasthan 2022 displays an undefined rate/median (—), with observations marked Not measured. |
 | 6 | Arsenic calculations / references | PASS | 365 valid events, 3,050 missing, one event above 0.01 mg/L; rate is 1/365 × 100 = 0.2739726%, displayed 0.3%. Acceptable and permissible references are both 0.01 mg/L, no relaxation; strict greater-than comparison, missing values excluded. Official references below. |
@@ -41,6 +41,8 @@ E2E_BASE_URL=https://jalrakshak-ai-opal.vercel.app npm run test:e2e
 ```
 
 Browser suite: 18 tests (10 existing workflow checks and 8 additional production-audit checks). The independent oracle is `tests/csv_audit_oracle.py`, using Python's standard-library CSV reader and documented reference limits, without importing application calculation code. JavaScript calculation suite: seven passing tests. Python provenance suite: five passing tests.
+
+All 18 browser tests passed against the rebuilt public production URL. Final application deployment `dpl_8rAyp65qSYXCyt3zFCBijxqw8LHu` was READY for commit `8ecd45c3a174d35eb69e57ae44771455038b3f68` (Vite; build phase about 15.3 seconds). [CI for this revision passed](https://github.com/rajsingh1301/JalRakshakAI/actions/runs/38251543813). Subsequent geometry assertions for the district bars and a settled overview screenshot also passed in two targeted production checks. Early screenshots can precede Recharts' entrance animation; the settled screenshot confirms visible bars and no application rendering fix was needed.
 
 The sandbox initially prevented Chrome launching. Re-running with authorized browser access succeeded; this was an execution-environment restriction, not a website failure. An additional export assertion initially used the abbreviated label Hardness; it was corrected to the actual CSV label Total hardness and passed without an application change.
 

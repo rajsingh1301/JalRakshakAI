@@ -78,6 +78,15 @@ test('all six parameter metrics, distribution bars and annual charts agree with 
       expect(cells[1]).toBe(`${district.exceedances} / ${district.valid}`);
       expect(cells[2]).toBe(rate(district.rate));
     }
+    const districtRates = actual.map(cells => oracle.districts[parameter][cells[0]].rate).filter(v => v > 0);
+    await expect.poll(async () => {
+      const widths = await districts.locator('.recharts-bar-rectangle path').evaluateAll(paths => paths.map(p => p.getBBox().width));
+      if (widths.length !== districtRates.length) return false;
+      if (!districtRates.length) return true;
+      if (Math.max(...widths) < 1) return false;
+      const scale = Math.max(...widths) / Math.max(...districtRates);
+      return districtRates.every((v, i) => Math.abs(widths[i] - v * scale) < .5);
+    }, { message: `${parameter}: rendered district bars must match actual CSV exceedance proportions` }).toBe(true);
     await districts.getByText('View chart values', { exact: true }).click();
   }
 });
@@ -144,6 +153,9 @@ test('Avaloka output remains explicitly pending without fabricated insight cards
 test('station toggles, priority search, band cards, pagination and export work', async ({ page, request }) => {
   const data = await (await request.get('/data/dashboard.json')).json();
   await ready(page);
+  // Capture a settled chart: early screenshots can precede Recharts' animation.
+  await expect.poll(() => page.locator('.recharts-bar-rectangle path').first().evaluate(p => p.getBBox().width)).toBeGreaterThan(100);
+  await page.screenshot({ path: 'test-results/audit-overview-settled.png', fullPage: true, animations: 'disabled' });
   for (const parameter of data.parameters) {
     await page.getByRole('button', { name: `Explore ${parameter.name}`, exact: true }).click();
     const stations = new Map();
