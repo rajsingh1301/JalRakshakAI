@@ -1,0 +1,48 @@
+name: Validate groundwater dashboard
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          npm ci
+          pip install -r requirements.txt
+      - name: Reproduce data and validate original measurements
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+          python scripts/prepare_dataset.py
+          python scripts/process_data.py
+          python -m unittest discover -s tests -p 'test_*.py'
+          git diff --exit-code -- data/processed/avaloka-ready.csv data/processed/provenance.json
+      - name: Test calculations and build
+        run: |
+          npm test
+          npm run build
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+      - name: Verify desktop and mobile workflows
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-test-evidence
+          path: test-results/
+          retention-days: 7
