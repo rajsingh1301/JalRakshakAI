@@ -30,8 +30,9 @@ jobs:
           python -m unittest discover -s tests -p 'test_*.py'
           python scripts/prepare_dataset.py
           python scripts/process_data.py
+          python scripts/verify_avaloka_csv.py
           python -m unittest discover -s tests -p 'test_*.py'
-          git diff --exit-code -- data/processed/avaloka-ready.csv data/processed/provenance.json
+          git diff --exit-code -- data/processed/avaloka-ready.csv data/processed/provenance.json data/avaloka-insights.json public/data/avaloka-insights.json public/data/resultjalrakshakAi.csv
       - name: Test calculations and build
         run: |
           npm test

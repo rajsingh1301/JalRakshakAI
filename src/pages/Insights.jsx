@@ -1,8 +1,10 @@
 import { Sparkles, Upload, MessageSquare, CircleCheck, ArrowUpRight, Download, FileCheck, Database } from 'lucide-react';
 import { PageHeading, Card, Badge, Notice, SourceFooter } from '../components/UI.jsx';
-import { verifyInsightBundle, number } from '../utils/analysis.js';
+import { verifyInsightBundle, verifyCsvBundle, number } from '../utils/analysis.js';
+import AvalokaCsvInsights from './AvalokaCsvInsights.jsx';
 
 export default function Insights({ data, insights }) {
+  if (verifyCsvBundle(insights, data.provenance.csv_sha256)) return <AvalokaCsvInsights bundle={insights} />;
   const verified = verifyInsightBundle(insights, data.provenance.csv_sha256);
   return <><PageHeading eyebrow="AVALOKA ANALYSIS" title="AI insights, grounded in evidence." description="Actual Avaloka analysis, original responses and reviewed supporting values — together in one place." action={<a className="button" href="https://app.avaloka.ai" target="_blank" rel="noreferrer">Open Avaloka <ArrowUpRight size={15} /></a>} />
     <Notice>AI findings always refer to the complete uploaded 2019–2023 CSV. The state/year controls do not rewrite an original Avaloka response.</Notice>

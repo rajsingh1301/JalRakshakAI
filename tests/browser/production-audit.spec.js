@@ -140,14 +140,21 @@ test('320, 375 and 768 pixel layouts allow every route and filter without overfl
   }
 });
 
-test('Avaloka output remains explicitly pending without fabricated insight cards', async ({ page, request }) => {
+test('reviewed Avaloka CSV is preserved, checked and attributed without invented chatbot claims', async ({ page, request }) => {
   const ai = await (await request.get('/data/avaloka-insights.json')).json();
-  expect(ai.status).toBe('pending');
-  expect(ai.insights).toEqual([]);
-  expect(ai.dataset_id).toBeNull();
+  expect(ai.status).toBe('verified_csv');
+  expect(ai.method).toBe('manual_web');
+  expect(ai.origin).toBe('user_provided_export');
+  const original = await (await request.get('/data/resultjalrakshakAi.csv')).body();
+  expect(createHash('sha256').update(original).digest('hex')).toBe(ai.artifact_sha256);
+  expect(ai.summary).toMatchObject({ measured_events: 365, districts: 21, exceedance_events: 1, source_events: 3415 });
+  expect(ai.districts.find(d => d.district === 'Sirsa')).toMatchObject({ sample_count: 31, exceedance_count: 1, max_arsenic: .14 });
+  expect(ai.exceedance_observations[0]).toMatchObject({ sample_id: 'CGWB-01050', value: .14 });
+  expect(ai.excluded_export_fields).toContain('priority_score');
   await ready(page, 'insights');
-  await expect(page.locator('.pending-analysis')).toContainText('No AI findings have been completed or verified yet');
-  await expect(page.locator('.insight-grid')).toHaveCount(0);
+  await expect(page.locator('.pending-analysis')).toHaveCount(0);
+  await expect(page.getByText('no API integration is claimed', { exact: false })).toBeVisible();
+  await expect(page.getByText('project ID, original chatbot response or score formula', { exact: false })).toBeVisible();
 });
 
 test('station toggles, priority search, band cards, pagination and export work', async ({ page, request }) => {

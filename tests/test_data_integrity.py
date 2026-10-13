@@ -4,12 +4,17 @@ import hashlib
 import importlib.util
 import json
 import unittest
+import csv
+import tempfile
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("import_avaloka", ROOT / "scripts/import_avaloka.py")
 importer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(importer)
+csv_spec = importlib.util.spec_from_file_location("verify_avaloka_csv", ROOT / "scripts/verify_avaloka_csv.py")
+csv_verifier = importlib.util.module_from_spec(csv_spec)
+csv_spec.loader.exec_module(csv_verifier)
 
 
 class DataIntegrityTests(unittest.TestCase):
@@ -61,6 +66,25 @@ class DataIntegrityTests(unittest.TestCase):
             with self.assertRaises(ValueError): importer.validate(pending)
         template = json.loads((ROOT / "data/avaloka-import-template.json").read_text())
         with self.assertRaises(ValueError): importer.validate(template)
+
+    def test_avaloka_export_matches_source_and_rejects_tampered_exceedances(self):
+        reviewed = csv_verifier.validate()
+        self.assertEqual(reviewed["summary"], {"districts": 21, "measured_events": 365,
+            "source_events": 3415, "exceedance_events": 1, "unmeasured_events": 3050})
+        self.assertEqual(reviewed["exceedance_observations"][0]["sample_id"], "CGWB-01050")
+        self.assertEqual(reviewed["exceedance_observations"][0]["value"], 0.14)
+        with (ROOT / "data/processed/resultjalrakshakAi.csv").open(newline="") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+        rows[0]["exceedance_count"] = "2"
+        with tempfile.TemporaryDirectory() as directory:
+            tampered = Path(directory) / "altered.csv"
+            with tampered.open("w", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=csv_verifier.FIELDS)
+                writer.writeheader()
+                writer.writerows(rows)
+            with self.assertRaisesRegex(ValueError, "exceedance count mismatch"):
+                csv_verifier.validate(tampered)
 
 
 if __name__ == "__main__":

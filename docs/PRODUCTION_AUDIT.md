@@ -1,5 +1,7 @@
 # Production audit · 12 October 2026
 
+**Historical snapshot:** The pending Avaloka findings in checks 7 and 10 describe the site on 12 October. A user-supplied manual Avaloka CSV export arrived on 13 October; see [the current evidence ledger](AVALOKA_ANALYSIS.md) for its independently checked numeric findings and remaining provenance gaps.
+
 Production: https://jalrakshak-ai-opal.vercel.app/
 
 The audit found and fixed one dashboard defect: **Analyzed parameters** displayed six even when the selected state/year had measurements for fewer tracked chemicals. For example, all states in 2019 have three measured tracked parameters. The card now counts parameters with at least one valid measurement within the current scope and explains that scope explicitly. All six remain available for inspecting missing coverage.

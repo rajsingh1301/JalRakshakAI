@@ -21,7 +21,7 @@ An environmental intelligence application for the Avaloka Hackathon 2026, built 
 - Manual Avaloka web workflow, upload-ready CSV and validated import format for genuine reviewed outputs.
 - Vercel production deployment and connected GitHub repository; automated validation workflow.
 
-**Remaining submission requirement:** genuine Avaloka web analysis results have not yet been supplied, reviewed or imported. The AI Insights page intentionally shows **Analysis pending**. Python statistics are never described as Avaloka findings.
+**Avaloka evidence now available:** the project owner supplied a district-arsenic CSV export from manual web analysis. All 21 district rows match the original measurements; the AI Insights page shows the checked figures, exact export and limitations. The file does not contain a project ID, original chatbot response or the formula for its `priority_score`. Those claims are withheld. Python statistics remain separately attributed.
 
 ## Problem and solution
 
@@ -69,6 +69,10 @@ Original datasets are already preserved in the repository. Raw data is not copie
 
 The selected integration is **manual analysis through https://app.avaloka.ai**, as requested by the user. No Avaloka token is required and authenticated API integration is not claimed.
 
+The supplied `data/processed/resultjalrakshakAi.csv` has 21 Haryana district rows and 365 measured arsenic samples. Run `.venv/bin/python scripts/verify_avaloka_csv.py` to compare every exported district count, mean, maximum and exceedance with `avaloka-ready.csv`. The exact 907-byte export is served as evidence. One of 31 measured events in Sirsa exceeded 0.01 mg/L; the original source row and sample ID appear on the Insights page. The export's score is deliberately omitted because its formula is unknown. Its service origin is reported from the project owner's statement, not authenticated from CSV metadata.
+
+Additional conversational results can still be imported once their original responses and project identity are available:
+
 1. Upload `data/processed/avaloka-ready.csv`.
 2. Ask the actual dataset-specific questions in [AVALOKA_PROMPTS.md](docs/AVALOKA_PROMPTS.md).
 3. Save original responses/artifacts and actual dataset/project identifiers.
@@ -91,7 +95,7 @@ See [AVALOKA_ANALYSIS.md](docs/AVALOKA_ANALYSIS.md) for the evidence ledger and 
 
 ```text
 Official CGWB CSVs → Python cleaning/validation → upload-ready CSV
-                                          ├→ Manual Avaloka analysis → reviewed original findings
+                                          ├→ Manual Avaloka CSV export → checked arsenic figures
                                           └→ Python parameter metrics → static dashboard JSON
                                                                ↓
                                         React filters, charts and monitoring priorities → Vercel
@@ -114,7 +118,7 @@ npm run test:e2e
 
 Browser tests use installed Google Chrome on macOS. On Linux/CI, install Chromium with `npx playwright install --with-deps chromium` before running them.
 
-**Executed successfully:** 7 calculation tests, 5 original-data integrity tests, 10 local browser tests, and the same 10 browser tests against the public Vercel site. Production builds passed locally and remotely. Evidence and limits: [TESTING.md](docs/TESTING.md).
+**Executed successfully for this revision:** 7 calculation tests, 6 original-data and export integrity tests, and 18 local browser tests. Production verification is recorded in [TESTING.md](docs/TESTING.md).
 
 ## Deployment
 
@@ -143,7 +147,7 @@ src/utils/             Filters, statistics, deterministic ranking and CSV export
 scripts/               Dataset preparation, metrics and genuine Avaloka import
 data/raw/              Untouched official source CSVs
 data/processed/        Cleaned upload CSV, provenance and dashboard outputs
-data/avaloka-insights.json   Genuine imported findings, currently pending
+data/avaloka-insights.json   Reviewed Avaloka CSV figures and explicit provenance limits
 public/data/           Small public dataset, JSON and reviewed evidence
 docs/                  Methodology, analysis ledger, testing and submission answers
 tests/                 Calculation, original-data and browser checks
@@ -153,10 +157,10 @@ tests/                 Calculation, original-data and browser checks
 
 Historical monitoring stations are not current household drinking-water evidence. Coverage varies sharply by year and parameter, especially sparse arsenic/iron measurements and only two Rajasthan records in 2022. Published zeros lack detection-limit metadata. District boundaries are not harmonized across years. Annual charts are not controlled trend estimates.
 
-Next steps are genuine Avaloka evidence import, more recent authenticated source measurements, additional geographic coverage, station identifiers and detection-limit/QA metadata. Confidence estimates require an appropriate sampling design rather than treating repeated observations as independent.
+Next steps are preserving the Avaloka project identity or original response for stronger service provenance, more recent authenticated source measurements, additional geographic coverage, station identifiers and detection-limit/QA metadata. Confidence estimates require an appropriate sampling design rather than treating repeated observations as independent.
 
 ## Submission
 
 Prepared answers: [SUBMISSION_ANSWERS.md](docs/SUBMISSION_ANSWERS.md).
 
-**Do not submit until the actual Avaloka findings are documented.** The Google Form has not been submitted; final submission requires the user’s explicit approval and personal name/email.
+The checked CSV analysis and its limits are documented in [AVALOKA_ANALYSIS.md](docs/AVALOKA_ANALYSIS.md). The Google Form has not been submitted; final submission requires the user’s explicit approval and personal name/email.

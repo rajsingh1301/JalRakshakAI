@@ -85,16 +85,23 @@ test('district priorities explain real ranks and preserve evidence gating', asyn
   await expect(page.locator('.rank-number').first()).toHaveText('—');
 });
 
-test('Avaloka page shows honest pending state and valid dataset download', async ({ page }) => {
+test('Avaloka page shows source-checked CSV findings and original export', async ({ page }) => {
   await ready(page, '#insights');
-  await expect(page.locator('.pending-analysis')).toContainText('Analysis pending');
-  await expect(page.locator('.pending-analysis')).toContainText('No AI findings have been completed or verified yet');
-  await expect(page.locator('.insight-grid')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'An exported result, checked against every measurement.' })).toBeVisible();
+  await expect(page.locator('.pending-analysis')).toHaveCount(0);
+  await expect(page.locator('.metric-value').nth(0)).toHaveText('365');
+  await expect(page.locator('.metric-value').nth(1)).toHaveText('21');
+  await expect(page.locator('.metric-value').nth(2)).toHaveText('1');
+  await expect(page.locator('.avaloka-district-table tbody tr')).toHaveCount(21);
+  await expect(page.locator('.avaloka-district-table tbody tr').first()).toContainText('Sirsa');
+  await expect(page.locator('.avaloka-district-table')).not.toContainText('priority_score');
+  await page.screenshot({ path: 'test-results/insights-desktop.png', fullPage: true, animations: 'disabled' });
   const downloadPromise = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'Get the upload-ready CSV' }).click();
+  await page.getByRole('link', { name: 'Download original export' }).click();
   const download = await downloadPromise;
   const csv = fs.readFileSync(await download.path(), 'utf8');
-  expect(csv.split('\n').filter(Boolean)).toHaveLength(3416);
+  expect(csv.split('\n').filter(Boolean)).toHaveLength(22);
+  expect(csv).toContain('Sirsa,31,');
 });
 
 test('all five routes navigate and remain available after refresh', async ({ page }) => {

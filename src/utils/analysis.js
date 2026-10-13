@@ -59,6 +59,7 @@ export function yearlyStatistics(records, parameter) {
 }
 
 export function verifyInsightBundle(bundle, datasetHash) {
+  if (bundle?.status === 'verified_csv') return verifyCsvBundle(bundle, datasetHash);
   return bundle?.status === 'verified' && bundle.dataset_sha256 === datasetHash &&
     typeof bundle.dataset_id === 'string' && !!bundle.dataset_id.trim() &&
     Array.isArray(bundle.insights) && bundle.insights.length > 0 &&
@@ -68,6 +69,32 @@ export function verifyInsightBundle(bundle, datasetHash) {
       typeof i.evidence_file === 'string' && !!i.evidence_file &&
       typeof i.coverage === 'string' && !!i.coverage.trim() && typeof i.explanation === 'string' && !!i.explanation.trim() &&
       Array.isArray(i.limitations) && i.limitations.length > 0 && typeof i.reviewed_at === 'string' && !!i.reviewed_at);
+}
+
+export function verifyCsvBundle(bundle, datasetHash) {
+  if (bundle?.status !== 'verified_csv' || bundle.provider !== 'Avaloka' ||
+      bundle.method !== 'manual_web' || bundle.origin !== 'user_provided_export' ||
+      bundle.dataset_sha256 !== datasetHash || bundle.parameter !== 'arsenic' ||
+      bundle.unit !== 'mg/L' || bundle.acceptable_limit !== 0.01 ||
+      bundle.artifact_url !== '/data/resultjalrakshakAi.csv' ||
+      !/^[a-f0-9]{64}$/.test(bundle.artifact_sha256 ?? '') ||
+      !Array.isArray(bundle.districts) || !bundle.districts.length ||
+      !Array.isArray(bundle.limitations) || !bundle.limitations.length ||
+      !Array.isArray(bundle.exceedance_observations)) return false;
+  const s = bundle.summary;
+  if (!s || !Number.isInteger(s.measured_events) || !Number.isInteger(s.source_events) ||
+      !Number.isInteger(s.exceedance_events) || s.source_events < s.measured_events ||
+      s.districts !== bundle.districts.length || s.unmeasured_events !== s.source_events - s.measured_events ||
+      s.measured_events !== bundle.districts.reduce((n, d) => n + d.sample_count, 0) ||
+      s.exceedance_events !== bundle.districts.reduce((n, d) => n + d.exceedance_count, 0) ||
+      s.exceedance_events !== bundle.exceedance_observations.length) return false;
+  return bundle.districts.every(d => d.state === 'Haryana' && typeof d.district === 'string' &&
+    Number.isInteger(d.sample_count) && d.sample_count > 0 && Number.isInteger(d.total_events) &&
+    d.total_events >= d.sample_count && Number.isInteger(d.exceedance_count) &&
+    d.exceedance_count >= 0 && d.exceedance_count <= d.sample_count &&
+    Number.isFinite(d.mean_arsenic) && Number.isFinite(d.max_arsenic) &&
+    Number.isFinite(d.exceedance_pct) &&
+    Math.abs(d.exceedance_pct - 100 * d.exceedance_count / d.sample_count) < 1e-8);
 }
 
 export const number = (n, digits = 0) => n == null || !Number.isFinite(n) ? '—' : new Intl.NumberFormat('en-IN', { maximumFractionDigits: digits }).format(n);

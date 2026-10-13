@@ -1,6 +1,6 @@
 # JalRakshak AI — submission answers
 
-**Current verdict: BLOCKED pending genuine Avaloka analysis evidence.** The working dashboard is publicly deployed and tested. Do not submit as demonstrating completed Avaloka usage until real outputs have been received, reviewed and imported. The form has not been submitted.
+**Current status:** one user-supplied Avaloka manual web CSV export has been independently checked against the original government measurements and added to the public dashboard. It contains no project ID or original chatbot response, so its service origin is user-reported. The other planned questions have no preserved responses. The form has not been submitted.
 
 Submission form: https://docs.google.com/forms/d/e/1FAIpQLSf2CCOwrVf7_0Uz5APq6_m-Ne4suYbbwczPKKbq3VlMLJHWpw/viewform
 
@@ -42,15 +42,13 @@ Our reproducible local calculations found 1,377 of 3,413 measured chloride event
 
 Missingness is a central finding: arsenic and iron were measured in only about 11% of selected events, while fluoride and nitrate columns were empty in the downloaded source files. The monitoring ranking therefore uses parameter-specific denominators and minimum sample/station/coverage rules, keeping insufficient evidence explicit rather than turning sparse data into a confident score.
 
-These numerical findings are Python-computed and independently validated against the preserved government measurements. They must not be represented as completed Avaloka analysis.
+These dashboard numbers are Python-computed and independently validated against the preserved government measurements. The separate district arsenic export described below is the only Avaloka result currently supplied.
 
 ## How did Avaloka help you?
 
-**This answer is not yet ready for an eligible final submission. Replace it only after genuine analysis outputs are verified. Current accurate status:**
+The project owner downloaded a district arsenic analysis CSV through Avaloka's manual web interface. The exported file contains 21 Haryana districts and 365 arsenic measurements. We compared every district's measured sample count, mean, maximum and exceedance percentage with the original CGWB data, and preserved the exact export for download from the AI Insights page. Sirsa is the only district in this export with an arsenic measurement above the 0.01 mg/L reference: one of 31 measured samples, with a maximum of 0.14 mg/L. The observation traces to Dabwali station, sample CGWB-01050. Of 3,415 selected events, 3,050 have no usable arsenic measurement, including all Rajasthan events.
 
-We prepared an authentic, cleaned CGWB CSV for manual analysis in Avaloka’s web interface and developed four dataset-specific investigations covering data quality, arsenic/iron observations, district comparisons and multiple elevated parameters. The application includes an evidence-preserving workflow for importing original Avaloka responses, supporting numerical values, dataset identifiers and analytical limitations. At the time these answers were prepared, the actual Avaloka outputs had not yet been supplied, reviewed or imported; no completed Avaloka findings or authenticated API integration are claimed.
-
-After the real outputs are available, describe the actual dataset upload, questions answered, supported findings and preserved evidence from `docs/AVALOKA_ANALYSIS.md`. Do not describe planned analyses as completed work.
+The export's `priority_score` has no supplied definition, so we did not use or display it. The CSV contains no Avaloka project identifier or original chat response; its origin as an Avaloka web export is based on the project owner's statement. No API integration or additional Avaloka findings are claimed. Historical monitoring samples do not establish current district-wide drinking-water safety.
 
 ## Supporting Link
 
@@ -60,14 +58,11 @@ The public Vercel production website was verified without login, and desktop/mob
 
 ## Anything else you'd like to share?
 
-Code and reproducible analysis are available at https://github.com/rajsingh1301/JalRakshakAI. The repository preserves original government CSVs, source URLs and SHA-256 checksums, a Python cleaning pipeline, parameter-specific reference thresholds and a transparent explanation for every monitoring priority. Seven calculation tests, five source-integrity tests and ten browser tests passed; the browser tests were also executed against the public production deployment.
+Code and reproducible analysis are available at https://github.com/rajsingh1301/JalRakshakAI. The repository preserves original government CSVs, source URLs and SHA-256 checksums, a Python cleaning pipeline, parameter-specific reference thresholds, a transparent explanation for every monitoring priority, and the exact user-supplied Avaloka CSV export with independent verification. Current test status is recorded in `docs/TESTING.md`.
 
-JalRakshak AI is decision support for additional monitoring. It does not certify drinking-water safety, predict medical outcomes or treat historical station observations as a representative household survey. Genuine Avaloka findings will remain separately attributed to their original responses and evidence.
+JalRakshak AI is decision support for additional monitoring. It does not certify drinking-water safety, predict medical outcomes or treat historical station observations as a representative household survey. The checked manual Avaloka CSV findings are separately attributed to the exact export and its limitations.
 
 ## Remaining actions before submission
 
-1. Upload the prepared CSV to Avaloka and run the questions in `docs/AVALOKA_PROMPTS.md`.
-2. Preserve actual project/dataset identifiers and original responses/artifacts, then provide them for factual review and import.
-3. Update the Avaloka evidence ledger and “How did Avaloka help you?” answer with the work that actually completed.
-4. Redeploy the verified insight changes and check the public website.
-5. Supply your name/email, review all form answers and explicitly approve final form submission.
+1. If available, preserve the Avaloka project URL or a screenshot/original chatbot response showing where this CSV was generated. The numerical CSV review is complete; this would strengthen service provenance.
+2. Supply your name/email, review all form answers and explicitly approve final form submission.

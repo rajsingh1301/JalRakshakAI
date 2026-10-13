@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { filterRecords, statistics, rankDistricts, distribution, verifyInsightBundle } from '../src/utils/analysis.js';
+import { filterRecords, statistics, rankDistricts, distribution, verifyInsightBundle, verifyCsvBundle } from '../src/utils/analysis.js';
 
 const data = JSON.parse(fs.readFileSync(new URL('../public/data/dashboard.json', import.meta.url)));
 const chloride = data.parameters.find(p => p.id === 'chloride');
@@ -63,9 +63,13 @@ test('distribution bins partition every valid value exactly once', () => {
   for (const p of data.parameters) assert.equal(distribution(data.records, p).reduce((a, b) => a + b.count, 0), data.statistics[p.id].valid);
 });
 
-test('pending, mismatched and unsupported AI bundles cannot render as verified', () => {
-  const pending = JSON.parse(fs.readFileSync(new URL('../public/data/avaloka-insights.json', import.meta.url)));
-  assert.equal(verifyInsightBundle(pending, data.provenance.csv_sha256), false);
+test('only source-matched reviewed CSV or complete original responses can render as verified', () => {
+  const reviewed = JSON.parse(fs.readFileSync(new URL('../public/data/avaloka-insights.json', import.meta.url)));
+  assert.equal(verifyCsvBundle(reviewed, data.provenance.csv_sha256), true);
+  assert.equal(verifyInsightBundle(reviewed, data.provenance.csv_sha256), true);
+  assert.equal(verifyCsvBundle({ ...reviewed, dataset_sha256: 'wrong' }, data.provenance.csv_sha256), false);
+  assert.equal(verifyCsvBundle({ ...reviewed, summary: { ...reviewed.summary, exceedance_events: 3 } }, data.provenance.csv_sha256), false);
+  assert.equal(verifyInsightBundle({ status: 'pending', dataset_sha256: data.provenance.csv_sha256 }, data.provenance.csv_sha256), false);
   assert.equal(verifyInsightBundle({ status: 'verified', dataset_sha256: data.provenance.csv_sha256, insights: [{ finding: 'invented' }] }, data.provenance.csv_sha256), false);
   assert.equal(verifyInsightBundle(null, data.provenance.csv_sha256), false);
 });

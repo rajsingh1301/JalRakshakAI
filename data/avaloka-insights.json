@@ -1,10 +1,255 @@
 {
-  "status": "pending",
+  "status": "verified_csv",
   "provider": "Avaloka",
   "method": "manual_web",
+  "artifact_type": "district_arsenic_csv",
+  "origin": "user_provided_export",
+  "origin_note": "Project owner supplied this file as an Avaloka web export; the CSV contains no project ID or chatbot response, so service origin is not independently authenticated.",
   "dataset_sha256": "75df9c6e0dd86588388d2a7b1e78e932ad6b868d6f470a77c21c3d0b9af43227",
-  "dataset_id": null,
-  "project_url": null,
-  "insights": [],
-  "note": "Awaiting genuine Avaloka exports and human verification. No API integration is claimed."
+  "artifact_sha256": "711040f4a91722bfdd42d454c3671328ad0e8ed954c5effa135a960f1beb544f",
+  "artifact_url": "/data/resultjalrakshakAi.csv",
+  "parameter": "arsenic",
+  "unit": "mg/L",
+  "acceptable_limit": 0.01,
+  "scope": "2019–2023 selected events; Haryana districts with measured arsenic",
+  "summary": {
+    "districts": 21,
+    "measured_events": 365,
+    "source_events": 3415,
+    "exceedance_events": 1,
+    "unmeasured_events": 3050
+  },
+  "districts": [
+    {
+      "state": "Haryana",
+      "district": "Sirsa",
+      "sample_count": 31,
+      "total_events": 114,
+      "mean_arsenic": 0.004516129032258065,
+      "max_arsenic": 0.14,
+      "exceedance_count": 1,
+      "exceedance_pct": 3.225806451612903
+    },
+    {
+      "state": "Haryana",
+      "district": "Ambala",
+      "sample_count": 13,
+      "total_events": 40,
+      "mean_arsenic": 0.0003846153846153846,
+      "max_arsenic": 0.005,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Bhiwani",
+      "sample_count": 18,
+      "total_events": 94,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Faridabad",
+      "sample_count": 6,
+      "total_events": 26,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Fatehabad",
+      "sample_count": 11,
+      "total_events": 40,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Gurugram",
+      "sample_count": 11,
+      "total_events": 60,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Hisar",
+      "sample_count": 27,
+      "total_events": 109,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Jhajjar",
+      "sample_count": 9,
+      "total_events": 34,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Jind",
+      "sample_count": 18,
+      "total_events": 53,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Kaithal",
+      "sample_count": 24,
+      "total_events": 67,
+      "mean_arsenic": 0.0004166666666666667,
+      "max_arsenic": 0.01,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Karnal",
+      "sample_count": 35,
+      "total_events": 93,
+      "mean_arsenic": 0.0005714285714285715,
+      "max_arsenic": 0.01,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Kurukshetra",
+      "sample_count": 20,
+      "total_events": 45,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Mahendragarh",
+      "sample_count": 7,
+      "total_events": 31,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Nuh",
+      "sample_count": 10,
+      "total_events": 48,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Palwal",
+      "sample_count": 20,
+      "total_events": 73,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Panchkula",
+      "sample_count": 20,
+      "total_events": 68,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Panipat",
+      "sample_count": 15,
+      "total_events": 47,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Rewari",
+      "sample_count": 11,
+      "total_events": 33,
+      "mean_arsenic": 0.0009090909090909091,
+      "max_arsenic": 0.01,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Rohtak",
+      "sample_count": 10,
+      "total_events": 47,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Sonipat",
+      "sample_count": 33,
+      "total_events": 112,
+      "mean_arsenic": 0.00030303030303030303,
+      "max_arsenic": 0.01,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    },
+    {
+      "state": "Haryana",
+      "district": "Yamunanagar",
+      "sample_count": 16,
+      "total_events": 53,
+      "mean_arsenic": 0.0,
+      "max_arsenic": 0.0,
+      "exceedance_count": 0,
+      "exceedance_pct": 0.0
+    }
+  ],
+  "exceedance_observations": [
+    {
+      "state": "Haryana",
+      "district": "Sirsa",
+      "station": "Dabwali",
+      "sample_id": "CGWB-01050",
+      "date": "2022-06-13T15:00:00",
+      "value": 0.14,
+      "source_file": "cgwb-haryana-1961-2025.csv",
+      "source_row": 1576
+    }
+  ],
+  "excluded_export_fields": [
+    "priority_score"
+  ],
+  "limitations": [
+    "The export has no project ID, original question, chatbot response, or definition of priority_score.",
+    "Arsenic is measured in only 365 of 3,415 selected events; all measured arsenic records are from Haryana.",
+    "A zero exceedance count only describes tested samples, not untested events or safe drinking water.",
+    "Historical monitoring wells do not represent current household exposure; laboratory detection limits are not supplied."
+  ]
 }
