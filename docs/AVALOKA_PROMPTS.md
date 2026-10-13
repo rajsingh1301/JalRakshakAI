@@ -22,4 +22,4 @@ Find actual sampling events with two or more elevated parameters among arsenic >
 
 Provide the full original answers (export or text), the exact question for each answer, dataset/project URL or ID, analysis/thread IDs if shown, and generated code/charts if available. Save original exports in `data/avaloka-evidence/`. The importer accepts original responses plus human-reviewed findings; it never creates answers automatically.
 
-Website AI Insights remains **Analysis pending** until genuine outputs and a matching dataset hash have been reviewed and imported.
+Website AI Insights displays the reviewed district-arsenic CSV export. Additional conversational findings remain pending until their original responses and matching dataset evidence are supplied and reviewed.

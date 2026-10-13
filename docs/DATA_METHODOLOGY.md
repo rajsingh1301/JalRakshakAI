@@ -120,7 +120,7 @@ Rajasthan's **two 2022 records** are a major coverage limitation. Year charts sh
 ## Attribution and limitations
 
 - **Python/JavaScript:** deterministic cleaning, statistics, filters, distribution and monitoring priorities.
-- **Avaloka:** actual manual web responses only; genuine exports have not yet been supplied or verified.
+- **Avaloka:** one user-supplied manual web district-arsenic CSV export; all 21 rows' source-checkable numbers are verified. Its service origin is user-reported because no project ID or original response was supplied. Other Auto Insights/chat findings are not attributed without preserved evidence.
 - **JalRakshak recommendations:** suggestions for confirmatory monitoring based on observed burden and evidence gaps.
 - **Scope:** two states, historical observations, uneven stations and chemical coverage, uncharacterized detection limits, no household/public-health inference.
 - A low or zero sampled exceedance rate cannot certify district water safety, especially for sparsely measured arsenic or iron.

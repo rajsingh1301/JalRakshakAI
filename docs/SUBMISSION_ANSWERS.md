@@ -1,5 +1,7 @@
 # JalRakshak AI — submission answers
 
+**Final copy-paste version:** [FINAL_HACKATHON_SUBMISSION.md](FINAL_HACKATHON_SUBMISSION.md). This file is the earlier working draft.
+
 **Current status:** one user-supplied Avaloka manual web CSV export has been independently checked against the original government measurements and added to the public dashboard. It contains no project ID or original chatbot response, so its service origin is user-reported. The other planned questions have no preserved responses. The form has not been submitted.
 
 Submission form: https://docs.google.com/forms/d/e/1FAIpQLSf2CCOwrVf7_0Uz5APq6_m-Ne4suYbbwczPKKbq3VlMLJHWpw/viewform

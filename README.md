@@ -163,4 +163,4 @@ Next steps are preserving the Avaloka project identity or original response for 
 
 Prepared answers: [SUBMISSION_ANSWERS.md](docs/SUBMISSION_ANSWERS.md).
 
-The checked CSV analysis and its limits are documented in [AVALOKA_ANALYSIS.md](docs/AVALOKA_ANALYSIS.md). The Google Form has not been submitted; final submission requires the user’s explicit approval and personal name/email.
+The checked CSV analysis and its limits are documented in [AVALOKA_ANALYSIS.md](docs/AVALOKA_ANALYSIS.md). Copy-paste-ready answers, verified metrics and the evidence manifest are in [FINAL_HACKATHON_SUBMISSION.md](docs/FINAL_HACKATHON_SUBMISSION.md). The Google Form has not been submitted; final submission requires the user’s explicit approval and personal name/email.
