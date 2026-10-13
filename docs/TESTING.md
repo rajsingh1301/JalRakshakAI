@@ -11,6 +11,9 @@ Public URL: **https://jalrakshak-ai-opal.vercel.app**.
 - Public processed JSON matches the local CSV SHA-256 and every summary value.
 - The original **10 Chrome end-to-end tests passed against the 12 October production alias** (16.9 seconds). The expanded 18-test audit also passed against that earlier revision; see [PRODUCTION_AUDIT.md](PRODUCTION_AUDIT.md).
 - With the new Avaloka CSV integration, **all 18 browser tests passed locally** (40.5 seconds). The Insights page additionally passed a targeted screenshot check.
+- On 13 October, GitHub-linked Vercel deployment of commit `c7933523dc48d4b0810a2434e003a4ae2918ee1b` reached **READY** (Vite build phase 13.2 seconds). The public alias served the exact export SHA-256 and the reviewed `verified_csv` bundle. **All 18 browser tests passed against the updated public URL** (36.4 seconds), including download, source counts, all five routes, filters, charts and mobile viewports.
+- [GitHub CI for the Avaloka CSV integration](https://github.com/rajsingh1301/JalRakshakAI/actions/runs/38348310280) passed data reproduction, source/export verification, JavaScript/Python tests, build and Linux browser workflows.
+- Recent `vercel logs --level error --since 1h` scan returned no logs. The direct CLI deploy reported `Not authorized`, but the connected GitHub deployment completed successfully and was verified on the public alias.
 - Full-page desktop and mobile screenshots generated and visually inspected. They are local QA artifacts under the ignored `test-results/` directory; overview examples are preserved in `docs/screenshots/`.
 
 Production browser command:
