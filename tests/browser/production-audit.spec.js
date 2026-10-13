@@ -157,6 +157,27 @@ test('reviewed Avaloka CSV is preserved, checked and attributed without invented
   await expect(page.getByText('project ID, original chatbot response or score formula', { exact: false })).toBeVisible();
 });
 
+test('a later reviewed response appears alongside the existing checked CSV', async ({ page, request }) => {
+  const data = await (await request.get('/data/dashboard.json')).json();
+  const fixture = {
+    status: 'verified', provider: 'Avaloka', method: 'manual_web',
+    dataset_sha256: data.provenance.csv_sha256, dataset_id: 'test-fixture',
+    insights: [{ id: 'fixture', verified: true, question: 'Synthetic browser test question',
+      finding: 'Synthetic browser test finding', original_response: 'Synthetic browser test response',
+      explanation: 'This is a browser test fixture only.', coverage: 'Test fixture only',
+      evidence_file: 'data/avaloka-evidence/test-fixture.txt', reviewed_at: '2026-10-13T00:00:00Z',
+      supporting_values: [{ label: 'Fixture value', value: 1, unit: 'test events' }],
+      limitations: ['This is not a real Avaloka result.'] }],
+  };
+  await page.route('**/data/avaloka-chat-insights.json', route => route.fulfill({ json: fixture }));
+  await ready(page, 'insights');
+  await expect(page.getByRole('heading', { name: 'District-by-district arsenic export' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Reviewed Avaloka responses' })).toBeVisible();
+  await expect(page.getByText('Synthetic browser test finding')).toBeVisible();
+  await page.getByRole('navigation').getByRole('link', { name: 'Overview' }).click();
+  await expect(page.getByText('CSV + responses')).toBeVisible();
+});
+
 test('station toggles, priority search, band cards, pagination and export work', async ({ page, request }) => {
   const data = await (await request.get('/data/dashboard.json')).json();
   await ready(page);

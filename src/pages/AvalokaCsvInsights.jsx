@@ -2,7 +2,7 @@ import { ArrowUpRight, CircleCheck, Database, Download, FlaskConical, MapPinned,
 import { Badge, Card, Metric, Notice, PageHeading, SourceFooter } from '../components/UI.jsx';
 import { number, percent } from '../utils/analysis.js';
 
-export default function AvalokaCsvInsights({ bundle }) {
+export default function AvalokaCsvInsights({ bundle, children }) {
   const summary = bundle.summary;
   const affected = bundle.districts.filter(row => row.exceedance_count > 0);
   return <>
@@ -15,6 +15,7 @@ export default function AvalokaCsvInsights({ bundle }) {
     </Card>
     <Card title="District-by-district arsenic export" subtitle="Sample count means valid arsenic measurements; total events include unmeasured arsenic" action={<Badge tone="gray">21 source-checked districts</Badge>}><div className="table-scroll"><table className="avaloka-district-table"><thead><tr><th>District</th><th>Measured / all events</th><th>Mean mg/L</th><th>Maximum mg/L</th><th>Above limit</th><th>Measured exceedance %</th></tr></thead><tbody>{bundle.districts.map(row => <tr key={row.district}><td><strong>{row.district}</strong><small>{row.state}</small></td><td>{number(row.sample_count)} / {number(row.total_events)}</td><td>{number(row.mean_arsenic, 6)}</td><td>{number(row.max_arsenic, 4)}</td><td>{number(row.exceedance_count)}</td><td>{percent(row.exceedance_pct)}</td></tr>)}</tbody></table></div><p className="method-note">The export's priority_score is omitted: its formula and meaning were not supplied. A 0% exceedance means none of the measured samples were above 0.01 mg/L; it says nothing about untested samples or water safety.</p></Card>
     <div className="two-column method-details"><Card title="Where this result comes from" subtitle="Original export retained byte-for-byte" action={<CircleCheck size={18} />}><dl className="provenance-list"><div><dt>Analysis method</dt><dd>Avaloka web interface · user-provided CSV export</dd></div><div><dt>Input period</dt><dd>2019–2023 selected government events</dd></div><div><dt>Arsenic reference</dt><dd>0.01 mg/L acceptable and permissible; equality does not exceed</dd></div><div><dt>Export SHA-256</dt><dd className="dataset-hash">{bundle.artifact_sha256}</dd></div><div><dt>Input SHA-256</dt><dd className="dataset-hash">{bundle.dataset_sha256}</dd></div></dl><a className="text-link" href="https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1843385&lang=2&reg=48" target="_blank" rel="noreferrer">Government BIS reference <ArrowUpRight size={13} /></a></Card><Card title="Limits of this finding" subtitle="Keep the missing evidence visible"><ul className="method-limitations">{bundle.limitations.map(item => <li key={item}>{item}</li>)}</ul></Card></div>
+    {children}
     <div className="attribution-key"><span><i className="legend-dot teal" /> Avaloka: user-provided analysis CSV</span><span><i className="legend-dot gray" /> JalRakshak: independent source comparison</span><span><i className="legend-dot coral" /> No API connection or health-risk score</span></div><SourceFooter />
   </>;
 }

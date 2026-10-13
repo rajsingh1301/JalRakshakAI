@@ -58,7 +58,7 @@ npm test
 npm run build
 ```
 
-The importer validates all entries before changing the insight JSON. Importing is an evidence-preservation and schema check, **not automated proof that an AI answer is correct or originates from Avaloka**; original service exports and human factual review remain essential. Invalid/pending/mismatched results cannot be displayed as verified insights.
+The importer validates all entries before writing `data/avaloka-chat-insights.json` and `public/data/avaloka-chat-insights.json`. Chatbot responses have a separate bundle so importing them, or rerunning the CSV verifier, preserves both types of evidence on the Insights page. Importing is an evidence-preservation and schema check, **not automated proof that an AI answer is correct or originates from Avaloka**; original service exports and human factual review remain essential. Invalid/pending/mismatched results cannot be displayed as verified insights.
 
 After import, commit and push the genuine evidence and insight changes, update this evidence ledger and submission answers, and redeploy. The insight page always describes the full uploaded CSV; a dashboard filter does not rewrite an original AI answer.
 

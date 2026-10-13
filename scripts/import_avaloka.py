@@ -68,10 +68,8 @@ def main():
     parser.add_argument("input", type=Path, help="JSON containing actual responses and reviewed findings")
     args = parser.parse_args()
     bundle = validate(json.loads(args.input.read_text()))
-    encoded = json.dumps(bundle, indent=2, allow_nan=False)
-    # Validation of all findings finishes before any production file is changed.
-    (ROOT / "data/avaloka-insights.json").write_text(encoded)
-    (ROOT / "public/data/avaloka-insights.json").write_text(encoded)
+    # Keep the independently checked CSV export intact. Conversational evidence
+    # has its own bundle so either verifier can be rerun without erasing the other.
     for insight in bundle["insights"]:
         source = ROOT / insight["evidence_file"]
         target = ROOT / "public/data/avaloka-evidence" / source.name
@@ -79,8 +77,8 @@ def main():
         shutil.copyfile(source, target)
         insight["public_evidence_url"] = f"/data/avaloka-evidence/{source.name}"
     encoded = json.dumps(bundle, indent=2, allow_nan=False)
-    (ROOT / "data/avaloka-insights.json").write_text(encoded)
-    (ROOT / "public/data/avaloka-insights.json").write_text(encoded)
+    (ROOT / "data/avaloka-chat-insights.json").write_text(encoded + "\n")
+    (ROOT / "public/data/avaloka-chat-insights.json").write_text(encoded + "\n")
     print(f"Imported {len(bundle['insights'])} human-reviewed Avaloka findings. Rebuild and redeploy the dashboard.")
 
 

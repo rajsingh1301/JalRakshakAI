@@ -134,7 +134,7 @@ vercel deploy --prod --yes
 
 The static output is `dist/`, configured in `vercel.json`. Navigation uses hash routes, so page refresh works without server routing rules. No visitor API calls or secrets are needed. `.env*`, `.venv/` and `.vercel/` remain ignored.
 
-The user-requested Vercel CLI/plugin/MCP setup is documented in [VERCEL_SETUP.md](docs/VERCEL_SETUP.md). Plugin tools require a new session to load; deployment was verified through authenticated CLI access.
+The user-requested Vercel CLI/plugin/MCP setup is documented in [VERCEL_SETUP.md](docs/VERCEL_SETUP.md). Plugin tools require a new session to load; the current production release was verified through the GitHub-connected Vercel deployment and public URL.
 
 ## Stack and structure
 
